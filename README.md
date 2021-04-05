@@ -27,4 +27,6 @@ Click and hold any mouse button to rotate the camera. Mouse wheel zooms in and o
 [TrackballCamera for Godot](https://github.com/Goutte/godot-trackball-camera) by Antoine Goutenoir - [MIT License](https://github.com/Goutte/godot-trackball-camera/blob/master/LICENSE)
 
 ## Assets
+[3D Model and Animations]() by yanorax - [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/)
+
 [Protractor](https://www.thingiverse.com/thing:1678) by ssd - [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/) - Original converted to an image file.
