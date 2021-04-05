@@ -1,0 +1,111 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://assets/swingstick.dae" type="PackedScene" id=1]
+[ext_resource path="res://assets/SwingStick.gd" type="Script" id=2]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "idle_up-loop"
+
+[sub_resource type="AnimationNodeBlendTree" id=5]
+graph_offset = Vector2( -268, 37.6 )
+nodes/Animation/node = SubResource( 3 )
+nodes/Animation/position = Vector2( 48, 128 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeBlendTree" id=7]
+graph_offset = Vector2( -168, 0.8 )
+nodes/Animation/node = SubResource( 6 )
+nodes/Animation/position = Vector2( 80, 128 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "threesixty_48"
+
+[sub_resource type="AnimationNodeTimeSeek" id=9]
+
+[sub_resource type="AnimationNodeTimeScale" id=10]
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+graph_offset = Vector2( -318.4, 19.2 )
+nodes/Animation/node = SubResource( 8 )
+nodes/Animation/position = Vector2( -160, 128 )
+nodes/Seek/node = SubResource( 9 )
+nodes/Seek/position = Vector2( 208, 128 )
+nodes/TimeScale/node = SubResource( 10 )
+nodes/TimeScale/position = Vector2( 32, 128 )
+nodes/output/position = Vector2( 384, 144 )
+node_connections = [ "output", 0, "Seek", "Seek", 0, "TimeScale", "TimeScale", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+xfade_time = 0.15
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+xfade_time = 0.15
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.4
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+[sub_resource type="AnimationNodeStateMachine" id=16]
+states/Idle/node = SubResource( 5 )
+states/Idle/position = Vector2( 183, 27.8 )
+states/Ready/node = SubResource( 7 )
+states/Ready/position = Vector2( 75.4, 128.8 )
+states/Swing/node = SubResource( 11 )
+states/Swing/position = Vector2( 281.416, 129.76 )
+transitions = [ "Idle", "Ready", SubResource( 12 ), "Ready", "Swing", SubResource( 13 ), "Swing", "Idle", SubResource( 14 ), "Idle", "Swing", SubResource( 15 ) ]
+graph_offset = Vector2( -269, -61 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
+
+[node name="SwingStick" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="LookFrom" type="Position3D" parent="." index="0"]
+
+[node name="Stick" parent="Armature/Skeleton" index="0"]
+cast_shadow = 0
+material/0 = SubResource( 2 )
+
+[node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
+transform = Transform( 1, 0, 1.11022e-16, 0, 1, 0, -1.11022e-16, 0, 1, -1.11022e-16, 0, -1 )
+bone_name = "hand_item"
+
+[node name="TravelMarker" type="Position3D" parent="Armature/Skeleton/BoneAttachment" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.8 )
+
+[node name="StateMarker" type="Position3D" parent="Armature/Skeleton/BoneAttachment" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+tree_root = SubResource( 16 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 17 )
+parameters/Swing/Seek/seek_position = -1.0
+parameters/Swing/TimeScale/scale = 1.0
+
+[node name="AnimStopTimer" type="Timer" parent="." index="4"]
+wait_time = 0.06
+one_shot = true
+
+[node name="AnimXfadeTimer" type="Timer" parent="." index="5"]
+one_shot = true
+
+[node name="TravelPaths" type="Spatial" parent="." index="6"]
+
+[node name="StatePaths" type="Spatial" parent="." index="7"]
+
+[connection signal="timeout" from="AnimStopTimer" to="." method="_on_AnimStopTimer_timeout"]
+[connection signal="timeout" from="AnimXfadeTimer" to="." method="_on_AnimXfadeTimer_timeout"]

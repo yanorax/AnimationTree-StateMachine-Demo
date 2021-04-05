@@ -1,0 +1,233 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/SwingStick.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/goutte.camera.trackball/trackball_camera.gd" type="Script" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://assets/protractor2k.png" type="Texture" id=4]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_unshaded = true
+albedo_color = Color( 0.901961, 0.901961, 0.901961, 1 )
+
+[sub_resource type="PlaneMesh" id=2]
+material = SubResource( 1 )
+size = Vector2( 5, 5 )
+
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 4, 4 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 2
+albedo_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+albedo_texture = ExtResource( 4 )
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Cameras" type="Spatial" parent="."]
+
+[node name="TrackballCamera" type="Camera" parent="Cameras"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 4, 0 )
+script = ExtResource( 2 )
+stabilize_horizon = true
+mouse_release_stop = true
+zoom_minimum = 0
+zoom_maximum = 7.0
+action_zoom_in = "zoom_in"
+action_zoom_out = "zoom_out"
+
+[node name="SwingStick" parent="." instance=ExtResource( 1 )]
+
+[node name="Background" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Protractor" type="MeshInstance" parent="."]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0 )
+cast_shadow = 0
+extra_cull_margin = 100.0
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="GUI"]
+anchor_bottom = 1.0
+margin_right = 305.0
+margin_bottom = -376.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelTravelTo" type="Label" parent="GUI/Panel"]
+margin_left = 17.0409
+margin_top = 26.4287
+margin_right = 80.0409
+margin_bottom = 46.4287
+text = "Travel To:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButtonTravelTo" type="OptionButton" parent="GUI/Panel"]
+margin_left = 98.0
+margin_top = 25.0
+margin_right = 217.0
+margin_bottom = 47.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonTravelTo" type="Button" parent="GUI/Panel"]
+margin_left = 227.762
+margin_top = 18.7356
+margin_right = 287.762
+margin_bottom = 51.7356
+text = "Go"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelAnims" type="Label" parent="GUI/Panel"]
+margin_left = 17.0798
+margin_top = 90.2419
+margin_right = 87.0798
+margin_bottom = 110.242
+text = "Animation:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButtonAnims" type="OptionButton" parent="GUI/Panel"]
+margin_left = 97.0
+margin_top = 89.0
+margin_right = 218.0
+margin_bottom = 111.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelPaths" type="Label" parent="GUI/Panel"]
+margin_left = 17.0798
+margin_top = 218.643
+margin_right = 87.0798
+margin_bottom = 238.643
+text = "Paths:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButtonPaths" type="OptionButton" parent="GUI/Panel"]
+margin_left = 97.0
+margin_top = 218.0
+margin_right = 218.0
+margin_bottom = 240.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelTimeScale" type="Label" parent="GUI/Panel"]
+margin_left = 17.0798
+margin_top = 133.242
+margin_right = 87.0798
+margin_bottom = 153.242
+text = "TimeScale:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEditTimeScale" type="LineEdit" parent="GUI/Panel"]
+margin_left = 96.0
+margin_top = 131.0
+margin_right = 219.0
+margin_bottom = 155.0
+text = "1"
+max_length = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelSeek" type="Label" parent="GUI/Panel"]
+margin_left = 17.0798
+margin_top = 175.242
+margin_right = 87.0798
+margin_bottom = 195.242
+text = "Seek:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEditSeek" type="LineEdit" parent="GUI/Panel"]
+margin_left = 96.0
+margin_top = 173.0
+margin_right = 219.0
+margin_bottom = 197.0
+text = "-1"
+max_length = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonClearPaths" type="Button" parent="GUI/Panel"]
+margin_left = 227.762
+margin_top = 212.736
+margin_right = 287.762
+margin_bottom = 245.736
+text = "Clear"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonLogs" type="Button" parent="GUI/Panel"]
+margin_left = 16.2134
+margin_top = 293.099
+margin_right = 76.2134
+margin_bottom = 326.099
+toggle_mode = true
+text = "Logs"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelLogs" type="Panel" parent="GUI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -320.0
+margin_top = -270.0
+margin_right = 320.0
+margin_bottom = 270.0
+
+[node name="TextEditLogs" type="TextEdit" parent="GUI/PanelLogs"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -304.0
+margin_top = -254.0
+margin_right = 304.0
+margin_bottom = 254.0
+readonly = true
+
+[connection signal="button_up" from="GUI/Panel/ButtonTravelTo" to="." method="_on_ButtonTravelTo_button_up"]
+[connection signal="item_selected" from="GUI/Panel/OptionButtonAnims" to="." method="_on_OptionButtonAnims_item_selected"]
+[connection signal="item_selected" from="GUI/Panel/OptionButtonPaths" to="." method="_on_OptionButtonPaths_item_selected"]
+[connection signal="text_entered" from="GUI/Panel/LineEditTimeScale" to="." method="_on_LineEditTimeScale_text_entered"]
+[connection signal="text_entered" from="GUI/Panel/LineEditSeek" to="." method="_on_LineEditSeek_text_entered"]
+[connection signal="button_up" from="GUI/Panel/ButtonClearPaths" to="." method="_on_ButtonClearPaths_button_up"]
+[connection signal="toggled" from="GUI/Panel/ButtonLogs" to="." method="_on_ButtonLogs_toggled"]
