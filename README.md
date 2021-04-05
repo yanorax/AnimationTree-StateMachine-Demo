@@ -1,4 +1,4 @@
-# AnimationTree StateMachine Demo Project for Godot Engine
+# Godot AnimationTree StateMachine Demo Project
 
 This project is a learning tool to better understand how the Godot AnimationTree Node with embedded StateMachine controls 3D animated models.
 
